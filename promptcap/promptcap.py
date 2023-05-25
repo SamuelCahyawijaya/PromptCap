@@ -25,7 +25,8 @@ class PromptCap(nn.Module):
         ])
         
     def caption(self, prompt, image, num_beams=5, no_repeat_ngram_size=3, max_new_tokens=100, **generator_args):
-        image = Image.open(image)
+        if type(image) == str:
+            image = Image.open(image)
         image = self.patch_resize_transform(image)
         image = image.unsqueeze(0)
         image = image.to(self.model.device)
